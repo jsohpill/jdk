@@ -114,6 +114,7 @@ class Bits {                            // package-private
         }
 
         // optimist!
+        // 先尝试保留内存，保留成功，直接返回
         if (tryReserveMemory(size, cap)) {
             return;
         }
@@ -128,18 +129,21 @@ class Bits {                            // package-private
             boolean refprocActive;
             do {
                 try {
+                    // 等待引用队列的处理，如果可以的话，也就是等待在引用队列中的虚引用Cleaner处理
                     refprocActive = jlra.waitForReferenceProcessing();
                 } catch (InterruptedException e) {
                     // Defer interrupts and keep trying.
                     interrupted = true;
                     refprocActive = true;
                 }
+                // Cleaner处理完成后，尝试保留内存
                 if (tryReserveMemory(size, cap)) {
                     return;
                 }
             } while (refprocActive);
 
             // trigger VM's Reference processing
+            // 如果引用队列中的数据处理完成，还能不能保留足够的内存，则启动FullGC，尝试释放DirectByteBuffer对象，把Cleaner虚引用放入引用队列中。
             System.gc();
 
             // A retry loop with exponential back-off delays.
@@ -153,6 +157,8 @@ class Bits {                            // package-private
             // ends in OOME, there's no need to hurry.
             long sleepTime = 1;
             int sleeps = 0;
+
+            // 在GC的过程中，尝试9次，去保留足够的内存
             while (true) {
                 if (tryReserveMemory(size, cap)) {
                     return;
@@ -172,6 +178,7 @@ class Bits {                            // package-private
             }
 
             // no luck
+            // 如果运气不好，无法保留足够的堆外内存，则抛出OutOfMemoryError。
             throw new OutOfMemoryError
                 ("Cannot reserve "
                  + size + " bytes of direct buffer memory (allocated: "
