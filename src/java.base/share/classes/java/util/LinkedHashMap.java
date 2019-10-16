@@ -61,8 +61,12 @@ import java.io.IOException;
  * <p>A special {@link #LinkedHashMap(int,float,boolean) constructor} is
  * provided to create a linked hash map whose order of iteration is the order
  * in which its entries were last accessed, from least-recently accessed to
- * most-recently (<i>access-order</i>).  This kind of map is well-suited to
- * building LRU caches.  Invoking the {@code put}, {@code putIfAbsent},
+ * most-recently (<i>access-order</i>). This kind of map is well-suited to building LRU caches.
+ *
+ * 特殊的{@link #LinkedHashMap（int，float，boolean）构造函数}是提供用于创建链接的哈希图，其迭代顺序为顺序
+ * 上次访问其条目的顺序，从最近最少访问到最近最多（<i>访问顺序</ i>）。 这种映射非常适合构建LRU缓存。
+ *
+ * Invoking the {@code put}, {@code putIfAbsent},
  * {@code get}, {@code getOrDefault}, {@code compute}, {@code computeIfAbsent},
  * {@code computeIfPresent}, or {@code merge} methods results
  * in an access to the corresponding entry (assuming it exists after the
@@ -295,6 +299,11 @@ public class LinkedHashMap<K,V>
             a.before = b;
     }
 
+    /**
+     * 在插入节点后，如果需要删除节点，则删除最近最少使用的节点
+     *
+     * @param evict
+     */
     void afterNodeInsertion(boolean evict) { // possibly remove eldest
         LinkedHashMap.Entry<K,V> first;
         if (evict && (first = head) != null && removeEldestEntry(first)) {

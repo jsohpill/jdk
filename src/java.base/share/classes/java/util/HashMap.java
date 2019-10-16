@@ -334,6 +334,8 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * cheapest possible way to reduce systematic lossage, as well as
      * to incorporate impact of the highest bits that would otherwise
      * never be used in index calculations because of table bounds.
+     *
+     * 如果key等于0，则默认key的hashcod为0，也就是table的0位置
      */
     static final int hash(Object key) {
         int h;

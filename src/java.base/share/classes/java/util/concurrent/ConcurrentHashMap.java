@@ -1006,7 +1006,10 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
         return putVal(key, value, false);
     }
 
-    /** Implementation for put and putIfAbsent */
+    /**
+     * Implementation for put and putIfAbsent
+     * ConcurrentHashMap不允许key为空，不允许value为空
+     */
     final V putVal(K key, V value, boolean onlyIfAbsent) {
         if (key == null || value == null) throw new NullPointerException();
         int hash = spread(key.hashCode());

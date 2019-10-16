@@ -469,6 +469,8 @@ public class Hashtable<K,V>
      *               {@code null}
      * @see     Object#equals(Object)
      * @see     #get(Object)
+     *
+     * Hashtable不允许value为null，key为null，如果key为null的时候，由native方法抛出NullPointerException的异常
      */
     public synchronized V put(K key, V value) {
         // Make sure the value is not null
