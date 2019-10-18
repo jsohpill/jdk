@@ -144,6 +144,8 @@ public class ReentrantLock implements Lock, java.io.Serializable {
          * available under fair vs nonfair rules. Locking methods
          * perform initialTryLock check before relaying to
          * corresponding AQS acquire methods.
+         *
+         * 在AQS acquire方法之前执行，判断可重入性以及能否立即锁住在公平和非公平的规则下
          */
         abstract boolean initialTryLock();
 
@@ -255,6 +257,7 @@ public class ReentrantLock implements Lock, java.io.Serializable {
 
         /**
          * Acquires only if reentrant or queue is empty.
+         * 只有当queue是空或者重入的时候，才能获取成功。
          */
         final boolean initialTryLock() {
             Thread current = Thread.currentThread();
@@ -275,6 +278,7 @@ public class ReentrantLock implements Lock, java.io.Serializable {
 
         /**
          * Acquires only if thread is first waiter or empty
+         * 只有当线程是first waiter或者空的时候，获取成功
          */
         protected final boolean tryAcquire(int acquires) {
             if (getState() == 0 && !hasQueuedPredecessors() &&

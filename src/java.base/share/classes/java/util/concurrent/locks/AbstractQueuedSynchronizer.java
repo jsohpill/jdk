@@ -519,6 +519,8 @@ public abstract class AbstractQueuedSynchronizer
 
     /**
      * The synchronization state.
+     *
+     * 同步器的状态
      */
     private volatile int state;
 
