@@ -61,6 +61,8 @@ import java.util.function.Predicate;
  * Linked queues typically have higher throughput than array-based queues but
  * less predictable performance in most concurrent applications.
  *
+ * 链接队列通常具有比基于阵列的队列更高的吞吐量，但是在大多数并发应用程序中，可预测的性能较低。
+ *
  * <p>The optional capacity bound constructor argument serves as a
  * way to prevent excessive queue expansion. The capacity, if unspecified,
  * is equal to {@link Integer#MAX_VALUE}.  Linked nodes are
@@ -368,6 +370,9 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
         final int c;
         final ReentrantLock putLock = this.putLock;
         final AtomicInteger count = this.count;
+
+        // 使用putLock来进行offer，入队操作进行锁操作，在入队操作后，如果capacity容量还有多余的，通知notFull condition，也就是
+        // 通知其他线程可以继续入队
         putLock.lockInterruptibly();
         try {
             while (count.get() == capacity) {
@@ -405,6 +410,9 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
             return false;
         final int c;
         final Node<E> node = new Node<E>(e);
+
+        // 使用putLock来进行offer，入队操作进行锁操作，在入队操作后，如果capacity容量还有多余的，通知notFull condition，也就是
+        // 通知其他线程可以继续入队
         final ReentrantLock putLock = this.putLock;
         putLock.lock();
         try {
@@ -449,6 +457,9 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
         final int c;
         long nanos = unit.toNanos(timeout);
         final AtomicInteger count = this.count;
+
+        // 使用putLock来进行poll，出队操作进行锁操作，在出队操作后，如果capacity容量还有多余的，通知notEmpty condition，也就是
+        // 通知其他线程可以继续出队
         final ReentrantLock takeLock = this.takeLock;
         takeLock.lockInterruptibly();
         try {
