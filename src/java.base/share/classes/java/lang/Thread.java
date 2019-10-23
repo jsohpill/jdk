@@ -57,6 +57,12 @@ import jdk.internal.HotSpotIntrinsicCandidate;
  * thread has its priority initially set equal to the priority of the
  * creating thread, and is a daemon thread if and only if the
  * creating thread is a daemon.
+ *
+ * 每个线程有一个优先级。
+ * 有更高优先级的线程比更低优先级的线程优先执行。
+ * 每个线程都有可能被标记为daemon。
+ * 线程中创建的线程，新的线程的优先级初始化为正在创建的线程，只有正在创建的线程是daemon，新的线程才是daemon。
+ *
  * <p>
  * When a Java Virtual Machine starts up, there is usually a single
  * non-daemon thread (which typically calls the method named
