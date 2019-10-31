@@ -37,6 +37,11 @@ package java.lang;
  * by the execution of the method or constructor and propagate outside
  * the method or constructor boundary.
  *
+ * Exception以及任何不是RuntimeException子类的子类都是可以检测的exceptions。
+ * 如果检查的异常可以由方法或构造函数的执行引发并在方法或构造函数边界之外传播，
+ * 则需要在方法或构造函数的{@code throws}子句中声明它们
+ *
+ *
  * @author  Frank Yellin
  * @see     java.lang.Error
  * @jls 11.2 Compile-Time Checking of Exceptions

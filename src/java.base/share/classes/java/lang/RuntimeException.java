@@ -39,8 +39,8 @@ package java.lang;
  * propagate outside the method or constructor boundary.
  *
  * RuntimeException和它的子类都是不可检测的异常。
- * 不可检测一场不需要在方法或者构造器的throws中声明，因为如果它们在方法或者构造器的执行过程中被
- * 抛出来，那么就会传播到方法或者构造器的外面。
+ * 如果未经检查的异常可以通过方法或构造函数的执行抛出并在方法或构造函数边界外传播，
+ * 则不需要在方法或构造函数的{@code throws}子句中声明未检查的异常
  *
  * @author  Frank Yellin
  * @jls 11.2 Compile-Time Checking of Exceptions
