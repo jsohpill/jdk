@@ -30,11 +30,17 @@ package java.lang;
  * exceptions that can be thrown during the normal operation of the
  * Java Virtual Machine.
  *
+ * RuntimeException是Java Virtual Machine正常运行时抛出的异常的基类。
+ *
  * <p>{@code RuntimeException} and its subclasses are <em>unchecked
  * exceptions</em>.  Unchecked exceptions do <em>not</em> need to be
  * declared in a method or constructor's {@code throws} clause if they
  * can be thrown by the execution of the method or constructor and
  * propagate outside the method or constructor boundary.
+ *
+ * RuntimeException和它的子类都是不可检测的异常。
+ * 不可检测一场不需要在方法或者构造器的throws中声明，因为如果它们在方法或者构造器的执行过程中被
+ * 抛出来，那么就会传播到方法或者构造器的外面。
  *
  * @author  Frank Yellin
  * @jls 11.2 Compile-Time Checking of Exceptions
